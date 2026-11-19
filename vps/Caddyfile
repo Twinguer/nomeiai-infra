@@ -1,0 +1,9 @@
+nomeiai.com.br, www.nomeiai.com.br {
+    encode zstd gzip
+    reverse_proxy app:80
+}
+
+api.nomeiai.com.br {
+    encode zstd gzip
+    reverse_proxy 10.77.0.2:8000
+}

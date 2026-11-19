@@ -1,0 +1,25 @@
+# Segredos e identidades
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+id_*
+*private*
+*secret*
+
+# Dados e artefatos de produção
+local/volumes/db/data/
+local/volumes/storage/
+vps/dist/
+**/backup/
+**/backups/
+*.dump
+*.backup
+*.backup.gz
+*.zip
+*.tar.gz
+*.sql.gz

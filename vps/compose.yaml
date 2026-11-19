@@ -1,0 +1,30 @@
+name: nomeiai
+services:
+  app:
+    image: nomeiai-prod-nomeia-app-test:latest
+    restart: unless-stopped
+    volumes:
+      - ./dist:/usr/share/nginx/html:ro
+    networks:
+      - proxy
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - proxy
+networks:
+  proxy:
+    name: proxy
+volumes:
+  caddy_data:
+  caddy_config:
