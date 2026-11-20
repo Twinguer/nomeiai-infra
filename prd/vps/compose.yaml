@@ -1,10 +1,8 @@
 name: nomeiai
 services:
   app:
-    image: nomeiai-prod-nomeia-app-test:latest
+    image: nomeiai-app:prd-2357badcd1dc
     restart: unless-stopped
-    volumes:
-      - ./dist:/usr/share/nginx/html:ro
     networks:
       - proxy
   caddy:

@@ -1,5 +1,7 @@
 # Nomeia Aí — Stack de produção
 
+> Registro histórico da inspeção anterior à troca do frontend para imagem por SHA. Para o estado atual, consultar [Inventário HML/PRD](INVENTARIO-HML-PRD.md) e [Deploy HML/PRD](DEPLOY-HML-PRD.md).
+
 > VPS pública + Supabase e PostgreSQL no servidor local | Estado verificado em 19/11/2026
 
 Este documento descreve a implantação observada em produção (PRD). É um retrato operacional da data acima, sem credenciais ou chaves privadas. HML e o frontend local são ambientes separados.

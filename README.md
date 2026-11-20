@@ -1,25 +1,17 @@
-# Nomeia Aí — stack de produção
+# Nomeia Aí — infraestrutura HML e PRD
 
-Retrato dos arquivos ativos em **19/11/2026**. A VPS publica o frontend e encaminha a API por WireGuard ao Supabase/PostgreSQL no servidor local. Leia [a arquitetura e o runbook](docs/ARQUITETURA-PRD.md) antes de qualquer mudança.
+Este repositório versiona a infraestrutura dos dois ambientes. O código da aplicação, Edge Functions e migrações tem fonte única em [nomeiai-app](https://github.com/Twinguer/nomeiai-app). Grafana e Zabbix ficam em [monitor](https://github.com/Twinguer/monitor).
 
-## Conteúdo
+## Organização
 
-- `vps/`: Compose e Caddyfile ativos em `/opt/nomeiai`.
-- `local/`: Compose de PRD e arquivos montados de Envoy, PostgreSQL, Supavisor e Edge Functions ativos em `/home/razum/supabase-nomeia-test`.
-- `wireguard/`: configuração da VPS **sem chave privada** e exemplo inferido para o servidor local.
+- `hml/`: Compose do frontend e do Supabase HML; `.env.example` enumera variáveis sem valores.
+- `prd/vps/`: Compose do frontend PRD e Caddyfile publicados na VPS.
+- `prd/local/`: Compose e snapshot dos arquivos auxiliares do Supabase PRD no servidor local.
+- `wireguard/`: exemplos de configuração sem chaves privadas.
+- `docs/INVENTARIO-HML-PRD.md`: caminhos ativos, serviços e estado da fonte.
+- `docs/DEPLOY-HML-PRD.md`: build, publicação, verificação e rollback.
+- `docs/ARQUITETURA-PRD.md`: inspeção histórica da PRD antes da passagem do frontend para imagem por SHA.
 
-O nome do diretório local contém “test”, mas o gateway publicado em `10.77.0.2:8000` é o backend usado pelo domínio de produção. HML está em outro Compose e não integra este repositório.
+Não há `.env` operacional, chaves, certificados, dados de PostgreSQL ou Storage neste repositório. Os Compose são cópias das configurações dos hosts e **não** devem ser iniciados diretamente a partir deste checkout. A fonte canônica das Edge Functions é `nomeiai-app/supabase/functions`; o diretório `prd/local/volumes/functions` é um snapshot legado da implantação.
 
-## Limites deste snapshot
-
-Não inclui `.env`, chaves, certificados, banco de dados, objetos do Storage, backups nem o frontend compilado `dist`. O código-fonte do frontend não estava em `/opt/nomeiai`; a imagem de Nginx monta um `dist` externo. Por isso, este repositório **não é um clone autossuficiente** da PRD. A publicação exige segredos fornecidos separadamente, dados restaurados e artefato frontend versionado.
-
-`local/.env.example` enumera as variáveis referenciadas pelo Compose, sem valores operacionais. Não execute `docker compose up` diretamente a partir deste snapshot em um host de produção. Compare configurações, valide segredos e tenha backup e rollback antes de aplicar mudanças.
-
-## Verificação sem alteração
-
-Na VPS: `cd /opt/nomeiai && docker compose ps` e `curl -I https://nomeiai.com.br/`.
-
-No servidor local: `docker compose -f /home/razum/supabase-nomeia-test/docker-compose.yml ps` e `docker exec supabase-db pg_isready -U supabase_admin -d postgres`.
-
-A API de PRD depende da VPN WireGuard entre `10.77.0.1` e `10.77.0.2`. O túnel SSH para administração do banco é separado.
+O frontend HML usa banco e API HML. O frontend PRD na VPS usa API e banco PRD no servidor local através da VPN. O mesmo SHA de código é construído separadamente para cada ambiente com as respectivas variáveis.

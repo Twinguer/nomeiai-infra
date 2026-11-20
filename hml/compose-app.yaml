@@ -1,0 +1,13 @@
+services:
+  nomeia-app-test:
+    image: nomeiai-app:hml-2357badcd1dc
+    build:
+      context: ../nomeiai-hml-source
+      dockerfile: Dockerfile
+      args:
+        VITE_SUPABASE_URL: "${HML_SUPABASE_PUBLIC_URL:?HML_SUPABASE_PUBLIC_URL is required}"
+        VITE_SUPABASE_ANON_KEY: "${HML_SUPABASE_ANON_KEY:?HML_SUPABASE_ANON_KEY is required}"
+        VITE_TURNSTILE_SITE_KEY: ${VITE_TURNSTILE_SITE_KEY}
+    ports:
+      - "8081:80"
+    restart: unless-stopped
