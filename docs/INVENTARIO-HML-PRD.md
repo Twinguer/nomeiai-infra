@@ -29,3 +29,7 @@ A VPS encaminha `api.nomeiai.com.br` pela VPN WireGuard para o gateway PRD local
 - Os Compose neste repositório são cópias sanitizadas dos arquivos ativos. Segredos, dados, Storage, certificados, chaves WireGuard e arquivos `.env` operacionais ficam fora do Git.
 - `prd/local/volumes/functions` registra o snapshot anterior da stack. A fonte canônica para novas Edge Functions é `nomeiai-app/supabase/functions`; conferir e sincronizar a função implantada antes de qualquer deploy.
 - O Compose HML foi versionado, mas os arquivos auxiliares HML em `volumes/api`, `volumes/db` e `volumes/pooler` permanecem no servidor, pendentes de auditoria de conteúdo. Não executar o Compose HML a partir deste checkout como se fosse autossuficiente.
+
+## Auditoria inicial de repositórios
+
+Os commits existentes nos três repositórios foram examinados em 19/11/2026 com busca de padrões de chave privada, token Mercado Pago de produção, chave Stripe de produção e JWT. Nenhuma ocorrência foi encontrada. Essa busca por padrões não substitui uma auditoria abrangente de segredos nem prova que arquivos históricos estejam livres de qualquer credencial.
