@@ -4,7 +4,7 @@ Este repositório versiona a infraestrutura dos dois ambientes. O código da apl
 
 ## Organização
 
-- `hml/`: Compose do frontend e do Supabase HML; `.env.example` enumera variáveis sem valores.
+- `hml/`: Compose do frontend e do Supabase HML, arquivos auxiliares de Envoy/PostgreSQL/Supavisor e `.env.example` sem valores.
 - `prd/vps/`: Compose do frontend PRD e Caddyfile publicados na VPS.
 - `prd/local/`: Compose e snapshot dos arquivos auxiliares do Supabase PRD no servidor local.
 - `wireguard/`: exemplos de configuração sem chaves privadas.
